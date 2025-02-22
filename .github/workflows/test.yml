@@ -24,21 +24,15 @@ jobs:
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
 
-      - name: Show Forge version
-        run: forge --version
-
       - name: Install Dependencies
         run: forge install
 
-      - name: Run Forge fmt (Check Formatting)
-        run: forge fmt --check
-        id: fmt
-        continue-on-error: true # Prevent pipeline from failing if only formatting is wrong
-
-      - name: Run Forge build
-        run: forge build --sizes
+      - name: Clean & Build
+        run: |
+          forge clean
+          forge build --sizes
         id: build
 
       - name: Run Forge tests
-        run: forge test -vvv
+        run: forge test -vvvv
         id: test
