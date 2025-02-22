@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 // QuadraticVotingDAO.sol
+
 import "lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 import "./GovernanceToken.sol";
 import "./Treasury.sol";
@@ -25,28 +26,20 @@ contract QuadraticVotingDAO is Ownable {
     event ProposalCreated(uint256 id, string description, uint256 deadline, address recipient, uint256 amount);
     event ProposalExecuted(uint256 id);
 
-    constructor(address initialOwner, address _governanceToken, address payable _treasury)
-        Ownable(initialOwner)
-    {
+    constructor(address initialOwner, address _governanceToken, address payable _treasury) Ownable(initialOwner) {
         governanceToken = GovernanceToken(_governanceToken);
         treasury = Treasury(_treasury);
     }
 
-    function createProposal(string memory _description, address payable _recipient, uint256 _amount) 
-        external onlyOwner
+    function createProposal(string memory _description, address payable _recipient, uint256 _amount)
+        external
+        onlyOwner
     {
         require(_amount <= treasury.getBalance(), "Insufficient treasury funds");
 
         proposalCount++;
-        proposals[proposalCount] = Proposal(
-            proposalCount,
-            _description,
-            0,
-            block.timestamp + DEFAULT_DURATION,
-            false,
-            _recipient,
-            _amount
-        );
+        proposals[proposalCount] =
+            Proposal(proposalCount, _description, 0, block.timestamp + DEFAULT_DURATION, false, _recipient, _amount);
 
         emit ProposalCreated(proposalCount, _description, block.timestamp + DEFAULT_DURATION, _recipient, _amount);
     }

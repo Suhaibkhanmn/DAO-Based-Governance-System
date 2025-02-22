@@ -15,28 +15,27 @@ contract QuadraticVotingDAOTest is Test {
     address public user = address(0x2);
 
     function setUp() public {
-    vm.prank(owner);
-    token = new GovernanceToken(owner);
+        vm.prank(owner);
+        token = new GovernanceToken(owner);
 
-    vm.prank(owner);
-    treasury = new Treasury(payable(owner));
+        vm.prank(owner);
+        treasury = new Treasury(payable(owner));
 
-    vm.prank(owner);
-    dao = new QuadraticVotingDAO(owner, address(token), payable(address(treasury)));
+        vm.prank(owner);
+        dao = new QuadraticVotingDAO(owner, address(token), payable(address(treasury)));
 
-    vm.prank(owner);
-    token.mint(user, 1000);
+        vm.prank(owner);
+        token.mint(user, 1000);
 
-    // ✅ Fund the treasury with 10 ETH before testing proposals
-    vm.deal(address(treasury), 10 ether);
-}
-
+        // ✅ Fund the treasury with 10 ETH before testing proposals
+        vm.deal(address(treasury), 10 ether);
+    }
 
     function testCreateProposal() public {
         vm.prank(owner);
         dao.createProposal("Test Proposal", payable(address(0x3)), 100);
 
-        (, string memory description, , , , , ) = dao.proposals(1);
+        (, string memory description,,,,,) = dao.proposals(1);
         assertEq(description, "Test Proposal");
     }
 }
