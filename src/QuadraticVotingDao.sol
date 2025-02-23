@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
-// QuadraticVotingDAO.sol
 
 import "lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 import "./GovernanceToken.sol";

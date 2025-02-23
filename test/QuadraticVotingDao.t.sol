@@ -2,10 +2,9 @@
 pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
-import "../src/QuadraticVotingDAO.sol"; // ✅ Correct relative path
+import "../src/QuadraticVotingDAO.sol"; 
 import "../src/Treasury.sol";
 import "../src/GovernanceToken.sol";
-
 
 contract QuadraticVotingDAOTest is Test {
     GovernanceToken public token;
@@ -28,7 +27,6 @@ contract QuadraticVotingDAOTest is Test {
         vm.prank(owner);
         token.mint(user, 1000);
 
-        // ✅ Fund the treasury with 10 ETH before testing proposals
         vm.deal(address(treasury), 10 ether);
     }
 
